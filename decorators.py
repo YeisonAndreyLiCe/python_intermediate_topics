@@ -1,40 +1,55 @@
-# We can use a closure to create a decorator. A decorator is a closure perse
-# A decorator is a function that takes another function as an argument and returns a function.
-# The decorator function can do some pre- and post-processing of the function it receives as an argument.
-# The decorator function can modify the behavior of the function it receives as an argument.
-# The decorator function can return a replacement function for the function it receives as an argument.
-# The decorator function can return a different function than the function it receives as an argument.
-# The decorator function can return the original function it receives as an argument.
+# Decorators
 
-def decorator(func):
-    def wrapper():
-        print("Something is happening before the function is called.")
-        func()
-    return wrapper
-
-def salutation():
-    print("Hello")
-
-###############
-def upper(func):
-    def wrapper(text):
+def upper(func: callable) -> callable:
+    def wrapper(text: str) -> str:
         return func(text).upper()
     return wrapper
 
 @upper
-def message(text):
+def message(text: str):
     return f'{text}, you have received a new message.'
 
+
+class Car:
+    def __init__(self):
+        self.__color: str = 'red'
+        self.__updateSoftware()
+
+    def drive(self) -> None:
+        print('driving')
+
+    def __updateSoftware(self) -> None:
+        print('updating software')
+
+
+class Celsius:
+    def __init__(self, temperature: float = 0):
+        self.temperature: float = temperature
+
+    def to_fahrenheit(self) -> float:
+        return (self.temperature * 1.8) + 32
+
+    @property
+    def temperature(self) -> float:
+        """Get the current temperature."""
+        return self._temperature
+
+    @temperature.setter
+    def temperature(self, value: float) -> None:
+        if value < -273:
+            raise ValueError("Temperature below -273 is not possible")
+        print("Setting value")
+        self._temperature = value
+
+
 if __name__ == '__main__':
-    """ say_hello = decorator(salutation)
-    say_hello() # --> Something is happening before the function is called \n Hello """
+    print(message('Valentine')) # VALENTINE, YOU HAVE RECEIVED A NEW MESSAGE.
+    red_car = Car()
+    red_car.drive()
+    red_car._Car__updateSoftware()
 
-    # A pythonic to use a decorator is to use @ symbol to call the decorator function: sugar syntax
-    @decorator
-    def salutation():
-        print("Hello World")
-
-    salutation()
-
-    #####
-    print(message('Valentine'))
+    c = Celsius(37)
+    print(c.temperature)
+    c.temperature = 37
+    print(c.to_fahrenheit())
+    print(c)
