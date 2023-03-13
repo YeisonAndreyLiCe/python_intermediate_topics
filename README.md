@@ -250,7 +250,7 @@ Output:
 JOHN, YOU HAVE RECEIVED A NEW MESSAGE.
 ```
 
-### Example 4 (Decorators with arguments) from (towardsdatascience.com/5-signs-youve-become-an-advanced-pythonista-without-even-realizing-it-2b1dd7ef57f3)
+### Example 4 (Decorators with arguments) from [Bex T (Medium), 2023](https://towardsdatascience.com/5-signs-youve-become-an-advanced-pythonista-without-even-realizing-it-2b1dd7ef57f3 "5-signs-youve-become-an-advanced-pythonista-without-even-realizing-it")
 
 ```python
 def stateful_function():
