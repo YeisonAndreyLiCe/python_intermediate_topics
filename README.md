@@ -1,3 +1,38 @@
+# Python Intermediate Topics
+## Table of Contents
+- [Python Intermediate Topics](#python-intermediate-topics)
+  - [Table of Contents](#table-of-contents)
+  - [Scope](#scope)
+    - [Example Local Scope](#example-local-scope)
+    - [Example Global Scope](#example-global-scope)
+    - [Example Enclosing Scope](#example-enclosing-scope)
+    - [Example Global Scope Only-read](#example-global-scope-only-read)
+    - [Example Keyword `global`](#example-keyword-global)
+    - [Built-in Scope](#built-in-scope)
+  - [Modules](#modules)
+  - [Packages](#packages)
+  - [Python Virtual Environments](https://github.com/YeisonAndreyLiCe/virtual_environments)
+  <!-- - [Exceptions](#exceptions) -->
+  - [Iterators](#iterators)
+  - [Closures](#closures)
+  - [Decorators](#decorators-higher-order-functions)
+  - [Generators](#generators)
+  - [Context Managers](#context-managers)
+  <!-- - [Regular Expressions](#python-regular-expressions) -->
+  - [Object Oriented Programming](#object-oriented-programming)
+  <!-- - [Multithreading](#python-multithreading)
+  - [Multiprocessing](#python-multiprocessing)
+  - [Concurrency](#python-concurrency)
+  - [Asynchronous Programming](#python-asynchronous-programming)
+  - [Memory Management](#python-memory-management)
+  - [Garbage Collection](#python-garbage-collection)
+  - [Extensions](#python-c-extensions)
+  - [C API](#python-c-api)
+  - [Python C Types](#python-c-types)
+  - [Python C Functions](#python-c-functions)
+  - [Python C Objects](#python-c-objects)
+  - [Python C Macros](#python-c-macros)
+  - [Python C API Reference](#python-c-api-reference-11) -->
 ## Scope
 Scopes are the contexts in which names are looked up. There are three different scopes in Python: `local`, `enclosing`, `global`, and `built-in`. The scope of a name defines the area of the program where you can unambiguously access that name, such as variables, functions, objects, and so on. The scope of a name is determined by the place where it is declared. Names that are declared outside of all functions are in the `global` scope. This means that those names can be accessed inside or outside of functions. Names that are declared inside a function are in the `local` scope, and can only be accessed inside that function. The `enclosing` scope is a special scope that only exists for nested functions. If the local scope is an inner or nested function, then the enclosing scope is the scope of the outer or enclosing function. The `built-in` scope is the outermost scope in Python, and it is the scope that contains all of the built-in names in Python. The built-in scope is searched last, after the local, enclosing, and global scopes (LEGB).
 
@@ -20,7 +55,7 @@ Traceback (most recent call last):
 NameError: name 'x' is not defined
 ```
 
-## Example Global Scope
+### Example Global Scope
 ```python
 x = 10
 
@@ -37,7 +72,7 @@ Output:
 10
 ```
 
-## Example Enclosing Scope
+### Example Enclosing Scope
 ```python
 def outer():
     x = 'local'
@@ -61,7 +96,7 @@ outer: nonlocal
 
 note that the `nonlocal` keyword is used to declare that `x` is not a local variable. Hence, when we assign a value to `x` inside the nested function, that change is reflected in the local variable in the enclosing function.
 
-## Example Global Scope Only-read
+### Example Global Scope Only-read
 ```python
 x = 10
 
@@ -79,7 +114,7 @@ Output:
 10
 ```
 
-## Example Keyword `global`
+### Example Keyword `global`
 ```python
 x = 10
 
@@ -100,14 +135,18 @@ Output:
 
 Note that the `global` keyword is used to declare that `x` is a global variable - hence, when we assign a value to `x` inside the function, that change is reflected when we use the value of `x` in the main block.
 
-## Built-in Scope
+### Built-in Scope
 This are the names in the pre-defined built-in modules. These are always available in your Python programs. You can see the list of built-in names by typing `dir(__builtins__)` in the Python interpreter.
 
 ---
 
 In python functions are `first class objects`. This means that functions can be passed as arguments to other functions, and can also be returned from other functions as well. Functions are also able to be defined inside other functions. This is all done to avoid code duplication and to allow programmers to create abstractions.
+## Modules
+A module is a file containing Python definitions and statements. The file name is the module name with the suffix `.py` appended. Within a module, the module’s name (as a string) is available as the value of the global variable `__name__`. A module can be imported by another program to make use of its functionality. We can define our most used functions in a module and import it, instead of copying their definitions into different programs.
+## Packages
+A package is a hierarchical file directory structure that defines a single Python application environment that consists of modules and subpackages and sub-subpackages, and so on. A package must contain a special file called `__init__.py` in order for Python to consider it as a package. This file can be left empty but we generally place the initialization code for that package in this file.
 
-## Clousures
+## Closures
 > "By default, after the function finishes execution, it returns to a blank state. This means its memory is wiped of all of its past arguments". [Bex T (Medium), 2023](https://towardsdatascience.com/5-signs-youve-become-an-advanced-pythonista-without-even-realizing-it-2b1dd7ef57f3 "5-signs-youve-become-an-advanced-pythonista-without-even-realizing-it")
 
 ```python
@@ -157,8 +196,8 @@ Output:
 3
 ```
 
-## Decorators (Hight order functions)
- **Decorators are a way to wrap a function**, and add extra functionalities to such a function. `A decorator is a function that takes another function as an argument and returns a function`
+## Decorators (Higher order functions)
+**Decorators are a way to wrap a function**, and add extra functionalities to such a function. `A decorator is a function that takes another function as an argument and returns a function`
 
 ### Example
 ```python
@@ -289,7 +328,7 @@ for chunk in read_large_file('file.txt'):
     print(chunk)
 ```
 
-## Example 2 (Fibonacci sequence)
+### Example 2 (Fibonacci sequence)
 ```python
 def fibonacci(n):
     a, b = 0, 1
@@ -392,12 +431,12 @@ with LockedContext(lock):
 ```
 
 ---
-# Object Oriented Programming
-## Classes
+## Object Oriented Programming
+### Classes
 Classes are blueprints of objects. They are used to create objects. A class is a collection of attributes and methods. Attributes are the variables that belong to a class or class' instance. Methods are the functions that belong to a class.
-## Objects (Instances)
+### Objects (Instances)
 Objects are the instances of a class. They are used to access the attributes and methods of a class. It is created using the constructor of the class. An object contains the data of a class and the methods that operate on that data.
-## Constructor (init)
+### Constructor (init)
 A constructor is a special method that is used to initialize the attributes of a class. It is called when an object of a class is instantiated. The constructor is called `__init__()` in Python. It is used to set the initial values of the attributes of a class. The constructor is called implicitly when an object is created. It is not necessary to call the constructor explicitly.
 ```python
 class Car:
@@ -410,19 +449,19 @@ class Car:
 
 red_car = Car('red', 10000) # __init__() is called implicitly.
 ```
-## self
+### self
 The `self` parameter is a reference to the current instance of the class, and is used to access variables that belong to the class. It does not have to be named `self` , you can call it whatever you like, but it has to be the first parameter of any function in the class.
-## Attributes (Properties) (have)
+### Attributes (Properties) (have)
 Attributes are the variables that belong to a class or class' instances. They are used to store the data of a class or class' instance. Instances' attributes are defined inside the constructor using the `self` keyword, class' attributes are defined outside the constructor and are shared by all instances of the class. The attributes of a class can be modified by a instance or by the class itself.
-## Methods (Behaviors) (do)
-### Instance Methods
+### Methods (Behaviors) (do)
+#### Instance Methods
 Instance methods are the methods that belong to a instance. They are used to define the behaviors of the instance. The first parameter in a instance method is `self` , which is a reference to the current instance of the class. Instance methods have access to the attributes of the instance. Instance methods can be called using the instance name only.
-### @classmethod
+#### @classmethod
 The classmethods are decorated with `@classmethod` . The first parameter in a classmethod is `cls` , which is a reference to the class itself. Classmethods are used to create factory methods. Factory methods are used to create instances of a class using different ways of instantiation. Methods of a class have access to the attributes of the class. Methods of a class can be called using the class name or the instance name.
-### @staticmethod
+#### @staticmethod
 The staticmethods are decorated with `@staticmethod` . Staticmethods are used to create utility functions. They are not bound to the class or its object. They are decorated with `@staticmethod` . Staticmethods can be called using the class name or the instance name. Staticmethods have no access to the attributes of the class or its instance.
 
-### Association
+#### Association
 An attribute can be an instance of another class. This is called association.
 ## The Four Pillars of OOP
 ### Encapsulation in Python
@@ -641,10 +680,3 @@ Penguin can't fly
 
 ### Abstraction
 Abstraction is a process of hiding the implementation details from the user, only the functionality will be provided to the user. In Python, we can achieve abstraction using `abstract classes` and `interfaces`.
-
-## Modules
-A module is a file containing Python definitions and statements. The file name is the module name with the suffix `.py` appended. Within a module, the module’s name (as a string) is available as the value of the global variable `__name__`. A module can be imported by another program to make use of its functionality. We can define our most used functions in a module and import it, instead of copying their definitions into different programs.
-
-## Packages
-A package is a hierarchical file directory structure that defines a single Python application environment that consists of modules and subpackages and sub-subpackages, and so on. A package must contain a special file called `__init__.py` in order for Python to consider it as a package. This file can be left empty but we generally place the initialization code for that package in this file.
-
