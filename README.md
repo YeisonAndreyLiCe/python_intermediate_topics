@@ -392,11 +392,44 @@ with LockedContext(lock):
 ```
 
 ---
+# Object Oriented Programming
+## Classes
+Classes are blueprints of objects. They are used to create objects. A class is a collection of attributes and methods. Attributes are the variables that belong to a class or class' instance. Methods are the functions that belong to a class.
+## Objects (Instances)
+Objects are the instances of a class. They are used to access the attributes and methods of a class. It is created using the constructor of the class. An object contains the data of a class and the methods that operate on that data.
+## Constructor (init)
+A constructor is a special method that is used to initialize the attributes of a class. It is called when an object of a class is instantiated. The constructor is called `__init__()` in Python. It is used to set the initial values of the attributes of a class. The constructor is called implicitly when an object is created. It is not necessary to call the constructor explicitly.
+```python
+class Car:
+    def __init__(self, color, mileage):
+        self.color = color
+        self.mileage = mileage
 
-## Encapsulation in Python
-Encapsulation is the process of wrapping data and the methods that work on data within one unit. This puts restrictions on accessing variables and methods directly and can prevent the accidental modification of data. In Python, we denote private attributes using underscore as the prefix i.e single “ _ “ or double “ __ “. Single _ underscore is used by convention to avoid conflicts with subclasses. Double __ underscore is used to avoid conflicts with subclasses and naming conflicts in general.
+    def drive(self):
+        print('driving')
 
-### Example
+red_car = Car('red', 10000) # __init__() is called implicitly.
+```
+## self
+The `self` parameter is a reference to the current instance of the class, and is used to access variables that belong to the class. It does not have to be named `self` , you can call it whatever you like, but it has to be the first parameter of any function in the class.
+## Attributes (Properties) (have)
+Attributes are the variables that belong to a class or class' instances. They are used to store the data of a class or class' instance. Instances' attributes are defined inside the constructor using the `self` keyword, class' attributes are defined outside the constructor and are shared by all instances of the class. The attributes of a class can be modified by a instance or by the class itself.
+## Methods (Behaviors) (do)
+### Instance Methods
+Instance methods are the methods that belong to a instance. They are used to define the behaviors of the instance. The first parameter in a instance method is `self` , which is a reference to the current instance of the class. Instance methods have access to the attributes of the instance. Instance methods can be called using the instance name only.
+### @classmethod
+The classmethods are decorated with `@classmethod` . The first parameter in a classmethod is `cls` , which is a reference to the class itself. Classmethods are used to create factory methods. Factory methods are used to create instances of a class using different ways of instantiation. Methods of a class have access to the attributes of the class. Methods of a class can be called using the class name or the instance name.
+### @staticmethod
+The staticmethods are decorated with `@staticmethod` . Staticmethods are used to create utility functions. They are not bound to the class or its object. They are decorated with `@staticmethod` . Staticmethods can be called using the class name or the instance name. Staticmethods have no access to the attributes of the class or its instance.
+
+### Association
+An attribute can be an instance of another class. This is called association.
+## The Four Pillars of OOP
+### Encapsulation in Python
+Encapsulation is the process of wrapping data and the methods that work on data within one unit (class). This puts restrictions on accessing variables and methods directly and can prevent the accidental modification of data. Attributes can be private, protected or public. Private attributes can only be accessed within the class. Protected attributes can be accessed within the class and its subclasses. Public attributes can be accessed from anywhere.  
+In Python, we denote private attributes using underscore as the prefix i.e single “ _ “ or double “ __ “.
+
+#### Example
 ```python
 class Car:
     def __init__(self):
@@ -425,33 +458,20 @@ AttributeError: 'Car' object has no attribute '__updateSoftware'. Did you mean: 
 ```
 
 ```python
-class Car:
-    def __init__(self):
-        self.__color: str = 'red'
-        self.__updateSoftware()
-
-    def drive(self) -> None:
-        print('driving')
-
-    def __updateSoftware(self) -> None:
-        print('updating software')
-
 red_car = Car()
 red_car.drive()
 red_car._Car__updateSoftware() # This is the way to access 'private' methods
-
 ```
-
 Output:
 ```output
 updating software
 driving
 updating software
 ```
-## class property(fget=None, fset=None, fdel=None, doc=None)
+#### class property(fget=None, fset=None, fdel=None, doc=None)
 This built-in function is a `factory function` that returns a property attribute. The property attribute has three methods, `fget()`, `fset()`, and `fdel()`. fget() is for getting a value of the attribute, fset() is for setting a value of the attribute, and fdel() is for deleting the attribute value. The doc argument is a string (like a comment).
 
-### [Example from python docs](https://docs.python.org/3/library/functions.html?highlight=property#property "python docs")
+#### [Example from python docs](https://docs.python.org/3/library/functions.html?highlight=property#property "python docs")
 
 ```python
 class C(object):
@@ -470,13 +490,13 @@ class C(object):
     x = property(get_x, set_x, del_x, "I'm the 'x' property.")
 ```
 
-## @property decorator
+#### @property decorator
 - `__init__` : This is a special method, which is called class constructor or initialization method that Python calls when you create a new instance of this class.
 - `__str__` : This is a special method, which is used to print the "informal" or nicely printable string representation of an object.
 - `__repr__` : This is a special method, which is used to print the "official" string representation of an object.
 - `__del__` : This is a special method, which is called when an object gets destroyed. You normally do not call this method yourself, it is called internally by Python when the object is no longer needed.
 
-### Example
+#### Example
 ```python
 class Celsius:
     def __init__(self, temperature: float = 0):
@@ -517,51 +537,10 @@ The @property decorator turns the temperature() method into a “getter” for a
 
 The temperature() method is still accessible, but it’s now accessed as an attribute. The temperature attribute is now a “property object” with getter and setter methods. 
 
-## @classmethod and @staticmethod
-The `@classmethod` and `@staticmethod` are built-in decorators in Python. They are used to define methods in a class. The difference between a `@classmethod` and a `@staticmethod` is:
 
-### @staticmethod
-A static method does not receive an implicit first argument. To declare a static method, use this idiom:
-
-```python
-class Class:
-    @staticmethod
-    def function(arg1, arg2, ...):
-        ...
-```
-
-Static methods in Python are similar to those found in Java or C++. For compatibility reasons, a class method called `f` is treated as a static method if it is defined like this:
-
-```python
-class Class:
-    def function(arg1, arg2, ...):
-        ...
-```
-Static methods can be called either on the class (such as `C.f()`) or on an instance (such as `C().f()`). They cannot modify object state. Static methods are restricted in what data they can access - and they’re primarily a way to namespace your methods.
-
-```python
-def regular_function():
-    ...
-
-class Class:
-    method = staticmethod(regular_function)
-```
-
-### @classmethod
-A classmethod receives the class as an implicit first argument.
-
-To declare a class method, use this idiom:
-
-```python
-class Class:
-    @classmethod
-    def function(cls, arg1, arg2, ...): # cls is the class just like self is the instance
-        ...
-```
-
-## Inheritance
-
-### Example
+### Inheritance
+Following the DRY (don't repeat yourself) principle, the idea of pass attributes and methods from a generic class to a more specific class, such as attributes and methods can be accessed from the child class using the `super()` function. The `super()` function returns an object that represents the parent class. 
+#### Example
 ```python
 class Animal:
     def __init__(self, name: str, age: int):
@@ -584,7 +563,7 @@ class Dog(Animal):
 
 ```
 
-## Multiple Inheritance
+#### Multiple Inheritance
 In Python, a class can inherit from multiple base classes. This is called multiple inheritance. A class derived from multiple classes is called a `derived class`.
 
 ### Example
@@ -623,78 +602,8 @@ Derived
 Geek1 Geek2
 ```
 
-## Let's see a practical example of multiple inheritance
-```python
-class Person:
-    def __init__(self, name: str, age: int, id_number: int):
-        self.name: str = name
-        self.age: int = age
-        self.__id_number: int = 12345
-
-    @property
-    def id_number(self) -> int:
-        return self.__id_number
-
-    @id_number.setter
-    def id_number(self, value: int) -> None:
-        if value < 0:
-            raise ValueError('ID number cannot be negative')
-        if isinstance(value, int):
-            self.__id_number = value
-        else:
-            raise TypeError('ID number must be an integer')
-
-    @property
-    def age(self) -> int:
-        return self.__age
-
-    @age.setter
-    def age(self, value: int) -> None:
-        if value < 0:
-            raise ValueError('Age cannot be negative')
-        if isinstance(value, int):
-            self.__age = value
-        else:
-            raise TypeError('Age must be an integer')
-    
-    def display(self) -> None:
-        print(f'Name: {self.name}, Age: {self.age}')
-    
-
-class Student(Person):
-    def __init__(self, name: str, age: int, id_number: int, marks: list):
-        super().__init__(name, age, id_number)
-        self.marks: list = marks
-
-    def calculate(self) -> float:
-        try:
-            return sum(self.marks) / len(self.marks)
-        except ZeroDivisionError:
-            return 0
-
-    
-class Programmer(Person, Student):
-    def __init__(self, name: str, age: int, id_number: int, marks: list, languages: list):
-        super().__init__(name, age, id_number)
-        self.languages: list = languages
-
-    def display(self) -> None:
-        print(f'Name: {self.name}, Age: {self.age}, Languages: {self.languages}')
-
-
-p1 = Programmer('John', 20, 12345, [90, 95, 85, 80], ['Python', 'C++'])
-
-p1.display()
-```
-
-Output:
-```output
-Name: John, Age: 20, Languages: ['Python', 'C++']
-```
-
-## Polymorphism
-Polymorphism is an ability (in OOP) to use a common `interface` for multiple forms (data types).
-
+### Polymorphism
+Polymorphism is an ability (in OOP) to use a common `interface` for multiple forms (data types). A child class can have a different implementation of the same method from the parent class. The implementation in the child class overrides the implementation in the parent class. The `super()` function can be used to call the method from the parent class and the child class can extend the functionality of the method.
 ### Example
 ```python
 class Parrot:
@@ -730,4 +639,12 @@ Parrot can fly
 Penguin can't fly
 ```
 
+### Abstraction
+Abstraction is a process of hiding the implementation details from the user, only the functionality will be provided to the user. In Python, we can achieve abstraction using `abstract classes` and `interfaces`.
+
+## Modules
+A module is a file containing Python definitions and statements. The file name is the module name with the suffix `.py` appended. Within a module, the module’s name (as a string) is available as the value of the global variable `__name__`. A module can be imported by another program to make use of its functionality. We can define our most used functions in a module and import it, instead of copying their definitions into different programs.
+
+## Packages
+A package is a hierarchical file directory structure that defines a single Python application environment that consists of modules and subpackages and sub-subpackages, and so on. A package must contain a special file called `__init__.py` in order for Python to consider it as a package. This file can be left empty but we generally place the initialization code for that package in this file.
 
