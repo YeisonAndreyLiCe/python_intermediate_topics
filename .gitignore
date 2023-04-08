@@ -1,4 +1,7 @@
 Pipfile/
 __pycache__/
 .mypy_cache/
-
+comands.txt
+Pipfile
+code/
+algorithms/
