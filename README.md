@@ -35,9 +35,9 @@
       - [Static Methods (@staticmethod)](#@staticmethod)
     - [The four pillars of OOP](#the-four-pillars-of-oop)
         - [Encapsulation in Python](#encapsulation-in-python)
-        - [@property](#@property-decorator)
+            - [@property](#@property-decorator)
         - [Inheritance](#inheritance)
-        - [Multiple Inheritance](#multiple-inheritance)
+            - [Multiple Inheritance](#multiple-inheritance)
         - [Polymorphism](#polymorphism)
         - [Abstraction](#abstraction)
   - [Splat Operator](#splat-operator-*-and-double-splat-operator-**)
@@ -53,6 +53,7 @@
   - [List Comprehensions](#list-comprehensions)
   - [Dictionary Comprehensions](#dictionary-comprehensions)
   - [Set Comprehensions](#set-comprehensions)
+  - [References](#references)
 
 ## Slices
 
