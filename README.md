@@ -53,23 +53,6 @@
   - [List Comprehensions](#list-comprehensions)
   - [Dictionary Comprehensions](#dictionary-comprehensions)
   - [Set Comprehensions](#set-comprehensions)
-    <!-- - [Magic Methods](#magic-methods)
-    - [Python Data Model](#python-data-model)
-    - [Python Data Model Reference](#python-data-model-reference)
-    - [Python Decorators](#python-decorators) -->
-    <!-- - [Multithreading](#python-multithreading)
-  - [Multiprocessing](#python-multiprocessing)
-  - [Concurrency](#python-concurrency)
-  - [Asynchronous Programming](#python-asynchronous-programming)
-  - [Memory Management](#python-memory-management)
-  - [Garbage Collection](#python-garbage-collection)
-  - [Extensions](#python-c-extensions)
-  - [C API](#python-c-api)
-  - [Python C Types](#python-c-types)
-  - [Python C Functions](#python-c-functions)
-  - [Python C Objects](#python-c-objects)
-  - [Python C Macros](#python-c-macros)
-  - [Python C API Reference](#python-c-api-reference-11) -->
 
 ## Slices
 
