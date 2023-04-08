@@ -2,6 +2,7 @@
 ## Table of Contents
 - [Python Intermediate Topics](#python-intermediate-topics)
   - [Table of Contents](#table-of-contents)
+  - [Slices](#slices)
   - [Scope](#scope)
     - [Example Local Scope](#example-local-scope)
     - [Example Global Scope](#example-global-scope)
@@ -20,6 +21,11 @@
   - [Context Managers](#context-managers)
   <!-- - [Regular Expressions](#python-regular-expressions) -->
   - [Object Oriented Programming](#object-oriented-programming)
+  - [The four pillars of OOP](#the-four-pillars-of-oop)
+  <!-- - [Magic Methods](#magic-methods)
+    - [Python Data Model](#python-data-model)
+    - [Python Data Model Reference](#python-data-model-reference)
+    - [Python Decorators](#python-decorators) -->
   <!-- - [Multithreading](#python-multithreading)
   - [Multiprocessing](#python-multiprocessing)
   - [Concurrency](#python-concurrency)
@@ -33,6 +39,36 @@
   - [Python C Objects](#python-c-objects)
   - [Python C Macros](#python-c-macros)
   - [Python C API Reference](#python-c-api-reference-11) -->
+
+## Slices
+```python
+# Slices
+# [start:stop:step]
+# start: index to start slice
+# stop: index to stop slice
+# step: size of the jump
+
+my_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Get first element
+print(my_list[0]) # 1
+
+# Get last element
+print(my_list[-1]) # 10
+
+# Get first 3 elements
+print(my_list[:3]) # [1, 2, 3]
+
+# Get last 3 elements
+print(my_list[-3:]) # [8, 9, 10]
+
+# Get elements from index 3 to 6
+print(my_list[3:7]) # [4, 5, 6, 7]
+
+# Get elements from index 0 to 8 with step 2
+print(my_list[0:9:2]) # [1, 3, 5, 7, 9]
+```
+
 ## Scope
 Scopes are the contexts in which names are looked up. There are three different scopes in Python: `local`, `enclosing`, `global`, and `built-in`. The scope of a name defines the area of the program where you can unambiguously access that name, such as variables, functions, objects, and so on. The scope of a name is determined by the place where it is declared. Names that are declared outside of all functions are in the `global` scope. This means that those names can be accessed inside or outside of functions. Names that are declared inside a function are in the `local` scope, and can only be accessed inside that function. The `enclosing` scope is a special scope that only exists for nested functions. If the local scope is an inner or nested function, then the enclosing scope is the scope of the outer or enclosing function. The `built-in` scope is the outermost scope in Python, and it is the scope that contains all of the built-in names in Python. The built-in scope is searched last, after the local, enclosing, and global scopes (LEGB).
 
@@ -143,8 +179,21 @@ This are the names in the pre-defined built-in modules. These are always availab
 In python functions are `first class objects`. This means that functions can be passed as arguments to other functions, and can also be returned from other functions as well. Functions are also able to be defined inside other functions. This is all done to avoid code duplication and to allow programmers to create abstractions.
 ## Modules
 A module is a file containing Python definitions and statements. The file name is the module name with the suffix `.py` appended. Within a module, the module’s name (as a string) is available as the value of the global variable `__name__`. A module can be imported by another program to make use of its functionality. We can define our most used functions in a module and import it, instead of copying their definitions into different programs.
+### if `__name__ == "__main__"`
+This is used to execute some code only if the file was run directly, and not imported. That is, if the file is imported, the code is not run. This is because when you import a module, the code in the module is executed, just like any other script. So if we want to have some code that we only want to run when the module is run directly, we can use this construct.
+```python
+if __name__ == "__main__":
+    # execute only if run as a script
+    main() # call the main function that has the code we want to run
+```
+
 ## Packages
-A package is a hierarchical file directory structure that defines a single Python application environment that consists of modules and subpackages and sub-subpackages, and so on. A package must contain a special file called `__init__.py` in order for Python to consider it as a package. This file can be left empty but we generally place the initialization code for that package in this file.
+A package is a hierarchical file directory structure that defines a single Python application environment that consists of modules and subpackages and sub-subpackages, and so on. A package must contain a special file called `__init__.py` in order for Python to consider it as a package (this is mandatory for versions 2.7 below). This file can be left empty but we generally place the initialization code for that package in this file.
+```python
+# __init__.py
+from . import module1, module2, module3 ...
+```
+Doing this will allows us to use namespaced modules, such as `package.module1`, `package.module2`, etc.
 
 ## Closures
 > "By default, after the function finishes execution, it returns to a blank state. This means its memory is wiped of all of its past arguments". [Bex T (Medium), 2023](https://towardsdatascience.com/5-signs-youve-become-an-advanced-pythonista-without-even-realizing-it-2b1dd7ef57f3 "5-signs-youve-become-an-advanced-pythonista-without-even-realizing-it")
@@ -642,6 +691,8 @@ Geek1 Geek2
 ```
 
 ### Polymorphism
+> The behavior of polymorphism allows us to specify common methods at an "abstract" level and implement them in particular instances. It is the process of using an operator or function in different ways for different data inputs. (coding dojo: [python oop](https://login.codingdojo.com "python oop"))
+
 Polymorphism is an ability (in OOP) to use a common `interface` for multiple forms (data types). A child class can have a different implementation of the same method from the parent class. The implementation in the child class overrides the implementation in the parent class. The `super()` function can be used to call the method from the parent class and the child class can extend the functionality of the method.
 ### Example
 ```python
@@ -680,3 +731,196 @@ Penguin can't fly
 
 ### Abstraction
 Abstraction is a process of hiding the implementation details from the user, only the functionality will be provided to the user. In Python, we can achieve abstraction using `abstract classes` and `interfaces`.
+
+---
+## Splat Operator `*` and Double Splat Operator `**`
+Splat operator is a kid of unpacking operator (destructuring js). It can be used to allows an iterable to be unpacked into positional arguments in a function call. It can also be used to unpack an iterable into a list or dictionary. The splat operator is represented by `*` and the double splat operator is represented by `**`.
+
+### Splat Operator
+#### Example
+```python
+def add(x, y):
+    return x + y
+
+nums = [3, 5]
+add(*nums) # 8
+```
+
+### Double Splat Operator
+#### Example
+```python
+def display_names(first, second):
+    print(f'{first} says hello to {second}')
+
+names = {"first": "John", "second": "Bob"}
+display_names(**names) # John says hello to Bob
+```
+
+## Multiple Arguments
+### Example
+```python
+def print_everything(*args):
+    for count, thing in enumerate(args):
+        print('{0}. {1}'.format(count, thing))
+
+print_everything('apple', 'banana', 'cabbage')
+```
+
+Output:
+```output
+0. apple
+1. banana
+2. cabbage
+```
+
+## Keyword Arguments
+### Example
+```python
+def table_things(**kwargs):
+    for name, value in kwargs.items():
+        print('{0} = {1}'.format(name, value))
+
+table_things(apple='fruit', cabbage='vegetable')
+```
+
+Output:
+```output
+apple = fruit
+cabbage = vegetable
+```
+
+## Unpacking Arguments
+### Example
+```python
+def print_three_things(a, b, c):
+    print('a = {0}, b = {1}, c = {2}'.format(a, b, c))
+
+mylist = ['aardvark', 'baboon', 'cat']
+print_three_things(*mylist)
+
+mydict = {'a': 'apple', 'b': 'banana', 'c': 'cherry'}
+print_three_things(**mydict)
+```
+
+Output:
+```output
+a = aardvark, b = baboon, c = cat
+a = apple, b = banana, c = cherry
+```
+
+## Lambda Functions
+Lambda functions are small anonymous functions. A lambda function can take any number of arguments, but can only have one expression. Lambda functions are used along with built-in functions like `filter()`, `map()` etc. Lambda functions are used to implement functionality that can be represented in a single line of code.
+
+### Example
+```python
+# lambda arguments : expression
+double = lambda x: x * 2
+print(double(5)) # 10
+```
+
+## Map
+The `map()` function executes a specified function for each item in an iterable. The item is sent to the function as a parameter. The `map()` function returns a map object (which is an iterator) of the results after applying the given function to each item of a given iterable (list, tuple etc.)
+
+### Example
+```python
+def multiply(x):
+    return x * 2
+
+numbers = [1, 2, 3, 4]
+result = map(multiply, numbers)
+print(list(result)) # [2, 4, 6, 8]
+```
+Now with lambda function
+```python
+numbers = [1, 2, 3, 4]
+result = map(lambda x: x * 2, numbers)
+print(list(result)) # [2, 4, 6, 8]
+```
+
+## Filter
+Filter creates a list of elements for which a function returns true. The `filter()` method filters the given sequence with the help of a function that tests each element in the sequence to be true or not.
+
+### Example
+```python
+result = filter(lambda x: x % 2 == 0, numbers)
+print(list(result)) # [2, 4, 6]
+```
+
+## Reduce
+The `reduce()` function is defined in the `functools` module. It takes a function and an iterable as arguments, and returns a single value calculated as follows: `reduce(function, sequence)` where function is a function that takes two arguments and sequence is an iterable.
+
+### Example
+```python
+from functools import reduce
+numbers = [1, 2, 3, 4]
+result = reduce(lambda x, y: x + y, numbers)
+print(result) # 10
+```
+## Sort and lambda
+### Example
+```python
+a = [(0, 2), (4, 3), (9, 9), (10, -1)]
+a.sort(key=lambda x: x[1])
+print(a) # [(10, -1), (0, 2), (4, 3), (9, 9)]
+```
+
+## Ternary Operator
+The ternary operator is a shorthand for an if-else statement. It is used to evaluate a condition and assign a value to a variable based on the condition. The syntax of the ternary operator is `value = true-expr if condition else false-expr`.
+
+### Example
+```python
+a, b = 10, 20
+minimum = a if a < b else b
+print(minimum) # 10
+```
+
+## List Comprehension
+List comprehension is an elegant way to define and create lists based on existing lists. List comprehension is generally more compact and faster than normal functions and loops for creating list. It consists of an expression followed by a `for` clause, then zero or more `for` or `if` clauses. The expressions can be anything, meaning you can put in all kinds of objects in lists.
+
+### Example
+```python
+[print(x) for x in range(10)] # 0 1 2 3 4 5 6 7 8 9
+```
+### List Comprehension with If
+```python
+[print(x) for x in range(10) if x % 2 == 0] # 0 2 4 6 8
+```
+
+### List Comprehension with If-Else
+```python
+[print(x) if x % 2 == 0 else print('odd') for x in range(10)] # odd 1 odd 3 odd 5 odd 7 odd 9
+```
+### Nested List Comprehension
+```python
+[[print(x, y) for x in range(3)] for y in range(3)] # 0 0 1 0 2 0 1 1 1 1 2 1 2 2 2 2
+```
+
+```python
+[[print(x, y) for x in range(3)] if y % 2 == 0 else [print(x, y) for x in range(3)] for y in range(3)]
+# 0 0 1 0 2 0 1 1 1 1 2 1 0 2 1 2 2 2
+```
+
+### Nested for in List Comprehension
+```python
+my_list = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+new_list = [num for elem in my_list for num in elem]
+print(new_list) # [1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+## Dictionary Comprehension
+Dictionary comprehension is an elegant and concise way to create a new dictionary from an iterable in Python. Dictionary comprehension consists of an expression pair (key: value) followed by a `for` clause inside curly braces `{}`.
+
+### Example
+```python
+squares = {x: x * x for x in range(6)}
+print(squares) # {0: 0, 1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+```
+
+## Set Comprehension
+Set comprehension is an elegant and concise way to create a new set from an iterable in Python. Set comprehension consists of an expression followed by a `for` clause inside curly braces `{}`.
+
+### Example
+```python
+squares = {x * x for x in [1, 1, 2]}
+print(squares) # {1, 4}
+```
