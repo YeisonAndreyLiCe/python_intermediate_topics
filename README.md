@@ -11,17 +11,46 @@
     - [Example Keyword `global`](#example-keyword-global)
     - [Built-in Scope](#built-in-scope)
   - [Modules](#modules)
+      - [if __name__ == "__main__":](#if-__name__--__main__)
   - [Packages](#packages)
   - [Python Virtual Environments](https://github.com/YeisonAndreyLiCe/virtual_environments)
   <!-- - [Exceptions](#exceptions) -->
-  - [Iterators](#iterators)
+  <!-- - [Iterators](#iterators) -->
   - [Closures](#closures)
   - [Decorators](#decorators-higher-order-functions)
   - [Generators](#generators)
   - [Context Managers](#context-managers)
   <!-- - [Regular Expressions](#python-regular-expressions) -->
   - [Object Oriented Programming](#object-oriented-programming)
+    - [Classes](#classes)
+    - [Objects](#objects)
+    - [Constructor](#constructor-init)
+    - [self](#self)
+    - [Attributes](#attributes-Properties-have)
+    - [Methods](#methods-Behaviours-do)
+        - [Instance Methods](#instance-methods)
+        - [Class Methods (@classmethod)](#@classmethod)
+        - [Static Methods (@staticmethod)](#@staticmethod)
   - [The four pillars of OOP](#the-four-pillars-of-oop)
+        - [Encapsulation in Python](#encapsulation-in-python)
+            - [@property](#@property decorator)
+        - [Inheritance](#inheritance)
+            - [Multiple Inheritance](#multiple-inheritance)
+        - [Polymorphism](#polymorphism)
+        - [Abstraction](#abstraction)
+    - [Splat Operator](#splat-operator-*-and-double-splat-operator-**)
+    - [Multiple Arguments (*args)](#multiple-arguments)
+    - [Keyword Arguments (**kwargs)](#keyword-arguments)
+    - [Unpacking Arguments](#unpacking-arguments)
+    - [Lambda Expressions](#lambda-functions)
+    - [Map](#map)
+    - [Filter](#filter)
+    - [Reduce](#reduce)
+    - [Sort and Lambda](#sort-and-lambda)
+    - [Ternary Operator](#ternary-operator)
+    - [List Comprehensions](#list-comprehensions)
+    - [Dictionary Comprehensions](#dictionary-comprehensions)
+    - [Set Comprehensions](#set-comprehensions)
   <!-- - [Magic Methods](#magic-methods)
     - [Python Data Model](#python-data-model)
     - [Python Data Model Reference](#python-data-model-reference)
@@ -72,7 +101,7 @@ print(my_list[0:9:2]) # [1, 3, 5, 7, 9]
 ## Scope
 Scopes are the contexts in which names are looked up. There are three different scopes in Python: `local`, `enclosing`, `global`, and `built-in`. The scope of a name defines the area of the program where you can unambiguously access that name, such as variables, functions, objects, and so on. The scope of a name is determined by the place where it is declared. Names that are declared outside of all functions are in the `global` scope. This means that those names can be accessed inside or outside of functions. Names that are declared inside a function are in the `local` scope, and can only be accessed inside that function. The `enclosing` scope is a special scope that only exists for nested functions. If the local scope is an inner or nested function, then the enclosing scope is the scope of the outer or enclosing function. The `built-in` scope is the outermost scope in Python, and it is the scope that contains all of the built-in names in Python. The built-in scope is searched last, after the local, enclosing, and global scopes (LEGB).
 
-## Example Local Scope
+### Example Local Scope
 ```python
 def my_func():
     x = 10
@@ -175,8 +204,6 @@ Note that the `global` keyword is used to declare that `x` is a global variable 
 This are the names in the pre-defined built-in modules. These are always available in your Python programs. You can see the list of built-in names by typing `dir(__builtins__)` in the Python interpreter.
 
 ---
-
-In python functions are `first class objects`. This means that functions can be passed as arguments to other functions, and can also be returned from other functions as well. Functions are also able to be defined inside other functions. This is all done to avoid code duplication and to allow programmers to create abstractions.
 ## Modules
 A module is a file containing Python definitions and statements. The file name is the module name with the suffix `.py` appended. Within a module, the module’s name (as a string) is available as the value of the global variable `__name__`. A module can be imported by another program to make use of its functionality. We can define our most used functions in a module and import it, instead of copying their definitions into different programs.
 ### if `__name__ == "__main__"`
@@ -194,6 +221,9 @@ A package is a hierarchical file directory structure that defines a single Pytho
 from . import module1, module2, module3 ...
 ```
 Doing this will allows us to use namespaced modules, such as `package.module1`, `package.module2`, etc.
+
+--- 
+In python functions are `first class objects`. This means that functions can be passed as arguments to other functions, and can also be returned from other functions as well. Functions are also able to be defined inside other functions. This is all done to avoid code duplication and to allow programmers to create abstractions.
 
 ## Closures
 > "By default, after the function finishes execution, it returns to a blank state. This means its memory is wiped of all of its past arguments". [Bex T (Medium), 2023](https://towardsdatascience.com/5-signs-youve-become-an-advanced-pythonista-without-even-realizing-it-2b1dd7ef57f3 "5-signs-youve-become-an-advanced-pythonista-without-even-realizing-it")
@@ -480,6 +510,7 @@ with LockedContext(lock):
 ```
 
 ---
+
 ## Object Oriented Programming
 ### Classes
 Classes are blueprints of objects. They are used to create objects. A class is a collection of attributes and methods. Attributes are the variables that belong to a class or class' instance. Methods are the functions that belong to a class.
@@ -733,6 +764,7 @@ Penguin can't fly
 Abstraction is a process of hiding the implementation details from the user, only the functionality will be provided to the user. In Python, we can achieve abstraction using `abstract classes` and `interfaces`.
 
 ---
+
 ## Splat Operator `*` and Double Splat Operator `**`
 Splat operator is a kid of unpacking operator (destructuring js). It can be used to allows an iterable to be unpacked into positional arguments in a function call. It can also be used to unpack an iterable into a list or dictionary. The splat operator is represented by `*` and the double splat operator is represented by `**`.
 
@@ -924,3 +956,13 @@ Set comprehension is an elegant and concise way to create a new set from an iter
 squares = {x * x for x in [1, 1, 2]}
 print(squares) # {1, 4}
 ```
+
+## References
+* [Bex T (Medium)](https://towardsdatascience.com/5-signs-youve-become-an-advanced-pythonista-without-even-realizing-it-2b1dd7ef57f3)
+* [Coding Dojo: Python Fundamentals](https://www.codingdojo.com)
+* [Platzi: Escuela de desarrollo back-end con Python](https://platzi.com/ruta/web-python/)
+* [Python Documentation](https://docs.python.org/3/)
+<!-- * [w3schools](https://www.w3schools.com/python/) -->
+<!-- * [Python Tutorial](https://www.tutorialspoint.com/python/index.htm) -->
+<!-- * [Python Tutorial](https://www.programiz.com/python-programming)
+* [Python Tutorial](https://www.learnpython.org/) -->
