@@ -1,4 +1,0 @@
-
-pip install mypy
-pip install -r requirements.txt
-mypy palindrome.py --check-untyped-defs
