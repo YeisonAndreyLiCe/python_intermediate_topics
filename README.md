@@ -34,12 +34,12 @@
       - [Class Methods (@classmethod)](#@classmethod)
       - [Static Methods (@staticmethod)](#@staticmethod)
     - [The four pillars of OOP](#the-four-pillars-of-oop)
-        - [Encapsulation in Python](#encapsulation-in-python)
-            - [@property](#@property-decorator)
-        - [Inheritance](#inheritance)
-            - [Multiple Inheritance](#multiple-inheritance)
-        - [Polymorphism](#polymorphism)
-        - [Abstraction](#abstraction)
+      - [Encapsulation in Python](#encapsulation-in-python)
+        - [@property](#@property-decorator)
+      - [Inheritance](#inheritance)
+        - [Multiple Inheritance](#multiple-inheritance)
+      - [Polymorphism](#polymorphism)
+      - [Abstraction](#abstraction)
   - [Splat Operator](#splat-operator-*-and-double-splat-operator-**)
   - [Multiple Arguments (\*args)](#multiple-arguments)
   - [Keyword Arguments (\*\*kwargs)](#keyword-arguments)
@@ -286,9 +286,93 @@ Output:
 3
 ```
 
+## Positional and keyword arguments (\*args, \*\*kwargs)
+
+```python
+def func(*args, **kwargs):
+    print(args)
+    print(kwargs)
+
+func(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, a=1, b=2, c=3)
+```
+
+Output:
+
+```output
+(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+{'a': 1, 'b': 2, 'c': 3}
+```
+
 ## Decorators (Higher order functions)
 
 **Decorators are a way to wrap a function**, and add extra functionalities to such a function. `A decorator is a function that takes another function as an argument and returns a function`
+
+```python
+def decorator_function(original_function):
+    # args and kwargs are used to accept any
+    # number of positional and keyword arguments
+    def wrapper_function(*args, **kwargs):
+        # do something before
+        return original_function(*args, **kwargs)
+    return wrapper_function
+
+@decorator_function
+def f(x):
+    return x ** 2
+
+print(f(2)) -> print(decorator_function(f)(2))
+```
+
+### wraps
+
+without `@wraps` the name of the function will be `wrapper_function`
+
+```python
+def mock_decorator(original_function):
+    def wrapper_function(*args, **kwargs):
+        return original_function(*args, **kwargs)
+    return wrapper_function
+
+@mock_decorator
+def f(x):
+    '''Docstring'''
+    return x ** 2
+
+print(f.__name__)
+print(f.__doc__)
+```
+
+Output:
+
+```output
+wrapper_function
+None
+```
+
+```python
+from functools import wraps
+
+def mock_decorator(original_function):
+    @wraps(original_function)
+    def wrapper_function(*args, **kwargs):
+        return original_function(*args, **kwargs)
+    return wrapper_function
+
+@mock_decorator
+def f(x):
+    '''Docstring'''
+    return x ** 2
+
+print(f.__name__)
+print(f.__doc__)
+```
+
+Output:
+
+```output
+f
+Docstring
+```
 
 ### Example
 
@@ -372,13 +456,22 @@ display_info ran with arguments (John, 25)
 ### Example a little more illustrative
 
 ```python
-def upper(func: callable) -> callable:
-    def wrapper(text: str) -> str:
-        return func(text).upper()
+from typing impot(
+    Callable,
+    TypeVar,
+    ParamSpec,
+)
+
+T = TypeVar('T')
+P = ParamSpec('P')
+
+def upper(func: Callable[P, str]) -> Callable[P, str]:
+    def wrapper(*args: P.args, **kwargs: P.kwargs) -> str:
+        return func(*args, **kwargs).upper()
     return wrapper
 
 @upper
-def message(text: str):
+def message(text: str) -> str:
     return f'{text}, you have received a new message.'
 
 print(message('John'))
@@ -409,7 +502,44 @@ def fibonacci(n):
     return fibonacci(n-1) + fibonacci(n-2)
 ```
 
+### cache
+
+````python
+import time
+from functools import cache
+
+def timer(function):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = function(*args, **kwargs)
+        end = time.time()
+        print(f'Elapsed time: {end - start}')
+        return result
+    return wrapper
+
+@cache
+def fibonacci(n):
+    if n < 2:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+@timer
+def fibonacci_timer(n):
+    return fibonacci(n)
+
+
 This is kinda like a cache (`memoization`), so that the function doesn't have to be called again if the arguments are the same.
+
+```python
+def timer(function):
+    import time
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = function(*args, **kwargs)
+        end = time.time()
+        print(f'Elapsed time: {end - start}')
+        return result
+    return wrapper
 
 ## Generators
 
@@ -430,7 +560,7 @@ def read_large_file(filename):
 
 for chunk in read_large_file('file.txt'):
     print(chunk)
-```
+````
 
 ### Example 2 (Fibonacci sequence)
 
