@@ -526,7 +526,7 @@ def fibonacci(n):
 @timer
 def fibonacci_timer(n):
     return fibonacci(n)
-
+````
 
 This is kinda like a cache (`memoization`), so that the function doesn't have to be called again if the arguments are the same.
 
@@ -540,7 +540,7 @@ def timer(function):
         print(f'Elapsed time: {end - start}')
         return result
     return wrapper
-
+```
 ## Generators
 
 Generators are a special class of functions that simplify the task of writing iterators. Generators are a simple and powerful tool for creating iterators. They are written like regular functions but use the `yield` statement whenever they want to return data. Each time `next()` is called on it, the generator resumes where it left off (it remembers all the data values and which statement was last executed).
